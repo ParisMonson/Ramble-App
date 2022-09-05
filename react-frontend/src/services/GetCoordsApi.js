@@ -1,9 +1,8 @@
 
 const ApiKey = "AIzaSyCVwRHHdtd6XynKpgTNl4SQOM4jT_pTaGk";
 
-export const GeoCooordsApi = async(placeId) => {
+export const GeoCooordsApi = async(startPoint) => {
     const journeyPointCoordsUrl = `https://maps.googleapis.com/maps/api/geocode/json?${placeId}&key=${ApiKey}`
-    
     const response = await fetch(journeyPointCoordsUrl, {method: "GET",
 })
 
