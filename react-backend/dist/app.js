@@ -52,7 +52,8 @@ app.use((0, express_flash_1.default)());
 app.use(express_1.default.json());
 app.use(body_parser_1.default.json());
 app.use((0, express_session_1.default)());
-app.use(express_1.default.static(path_1.default.join(__dirname, "/react-frontend")));
+app.use(express_1.default.static(path_1.default.join(__dirname, "..", "..", "react-frontend/build")));
+console.log(path_1.default.join(__dirname, "..", "..", "react-frontend"));
 const mongoDbUrl = "mongodb://0.0.0.0/Ramble";
 mongoose_1.default.Promise = bluebird_1.default;
 mongoose_1.default.connect(mongoDbUrl).then(() => { console.log("Database connection worked "); }).catch(err => {

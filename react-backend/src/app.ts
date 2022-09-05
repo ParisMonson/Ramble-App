@@ -30,8 +30,8 @@ app.use(flash());
 app.use(express.json())
 app.use(bodyParser.json())
 app.use(session());
-app.use(express.static(path.join(__dirname, "/react-frontend")))
-
+app.use(express.static(path.join(__dirname, "..", "..", "react-frontend/build")))
+console.log(path.join(__dirname, "..", "..", "react-frontend"))
 const mongoDbUrl =  "mongodb://0.0.0.0/Ramble";
 mongoose.Promise = bluebird;
 
@@ -58,6 +58,7 @@ mongoose.connect(mongoDbUrl).then(
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, "..", "..", "react-frontend/public/index.html"));
 });
+
 
 
 
