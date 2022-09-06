@@ -2,19 +2,26 @@ import { DropDownList } from "../atomic-components/DropDownList";
 import { Page } from "../pages/Page";
 // import { Footer } from "../atomic-components/Footer";
 import React from "react";
+import { Wrapper } from "@googlemaps/react-wrapper";
 import { GeoCoordsApi } from "../../services/GetCoordsApi";
+
+
+
+
+import { GetMap } from "../atomic-components/getMap";
 
 
 export const NewJourneyPage = () => {
     
 const whenSubmit = (event) => {
+
         event.preventDefault()
         const startPoint = event.target.startPoint
      
        
         GeoCoordsApi(startPoint);
         console.log(startPoint)
-    
+
     }
     
     const disciplines = [
@@ -22,6 +29,10 @@ const whenSubmit = (event) => {
         "Running",
         "Cycling"
     ]
+
+    const render = (Status) => {
+        return <h1>{Status}</h1>;
+    };
 
     return (
         <div>
@@ -38,6 +49,11 @@ const whenSubmit = (event) => {
                 <input className="button" type="submit" value="Generate Route" />
             </form>
             </div>
+            <Wrapper apiKey={"AIzaSyCVwRHHdtd6XynKpgTNl4SQOM4jT_pTaGk"} render={render} >
+                
+                <GetMap />
+ 
+            </Wrapper>
         </div>
     )
 }
