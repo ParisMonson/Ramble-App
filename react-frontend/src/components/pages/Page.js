@@ -6,7 +6,9 @@ import React from "react";
 export const Page = (props) => {
     return (
     <div>
-    <Navbar />
+        {props.user &&  <Navbar />}
+        
+   
          {/* {props.children}
     <Footer /> */}
     </div>

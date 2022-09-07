@@ -9,11 +9,13 @@ import { Mission } from './components/pages/Mission';
 import { AppFunctionality } from './components/pages/AppFunctionality';
 import { NewJourneyPage } from './components/pages/NewJourneyPage';
 import { Profile } from './components/pages/Profile'
+import { Page } from './components/pages/Page';
 
 function App() {
   const [user, setUser] = React.useState([])
   return (
     <div className= "App">
+      <Page user={user} />
     <BrowserRouter>
     <Routes>
           <Route path='/' element={<IndexPage />} />
@@ -23,8 +25,8 @@ function App() {
           {/* need to send props of user details into this home page. */}
           <Route path='/mission' element={<Mission />} />  
           <Route path='/app' element={<AppFunctionality />} />   
-          <Route path='/journey/new' element={<NewJourneyPage />} /> 
-          <Route path='/profile' element={<Profile />} />
+          <Route path='/journey/new' element={<NewJourneyPage user={user}/>} /> 
+          <Route path='/profile' element={<Profile user={user}/>} />
       </Routes>
    </BrowserRouter>     
   </div> 
