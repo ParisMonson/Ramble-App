@@ -5,9 +5,36 @@ import {useNavigate} from 'react-router-dom';
 import React, {useRef, useState } from "react";
 import { usePlacesWidget } from "react-google-autocomplete";
 
+const StartMapAPI = (props) => {
+  const { ref, autocompleteRef } = usePlacesWidget({
+    apiKey:"AIzaSyCVwRHHdtd6XynKpgTNl4SQOM4jT_pTaGk",
+    options: {
+      types: []
+    },
+    
+    onPlaceSelected: (place) => {
+      props.setStart_coordinates(place.geometry.location)
+    }
+  });
+  return <input ref={ref} name="startPoint" placeholder="Where will your journey start?" />
+}
 
+const EndMapAPI = (props) => {
+  const { ref, autocompleteRef } = usePlacesWidget({
+    apiKey:"AIzaSyCVwRHHdtd6XynKpgTNl4SQOM4jT_pTaGk",
+    options: {
+      types: []
+    },
+    onPlaceSelected: (place) => {
+      props.setEnd_coordinates(place.geometry.location)
+    }
+  });
+  
+  
+  return <input ref={ ref } name="endPoint" type="text" placeholder="Where will your journey end?" />
+}
 
-export const NewJourneyPage = () => {
+export const NewJourneyPage = (props) => {
    
     const [start_coordinates, setStart_coordinates] = useState();
     const [end_coordinates, setEnd_coordinates] = useState();
@@ -19,26 +46,36 @@ export const NewJourneyPage = () => {
 
       const saveRoute = (event) => {
       event.preventDefault()
-      console.log("It worked", start_coordinates)
-      
+
+      const user_id = props.user._id
+
       const start_place = start_coordinates
       const end_place = end_coordinates
-      const discipline = event.target.discipline
+      const discipline = "cycling"
       const title = event.target.title
       const description = event.target.description
+      const date = event.target.date
       const startTime = event.target.startTime
       const startPoint = event.target.startPoint
       const endPoint = event.target.endPoint
-      console.log("Discipline", discipline)
+      console.log("Discipline", discipline.item)
+      console.log(user_id)
+      console.log(start_place)
+      console.log(end_place)
+      console.log(title)
+      console.log(description)
+      console.log(startTime)
+      console.log(startPoint)
+      console.log(endPoint)
 
       fetch('/api/save_route', {
         method: 'POST',
         headers: {
             'Content-type': 'application/json'
         },
-        body: JSON.stringify({title: title.value, description: description.value, startPoint: startPoint,endPoint: endPoint ,discipline: discipline, startTime: startTime.value, start_place: start_place, end_place: end_place})
+        body: JSON.stringify({host_id: user_id, title: title.value, description: description.value, date: date.value, startPoint: startPoint.value,endPoint: endPoint.value ,discipline: discipline, startTime: startTime.value, start_place: start_place, end_place: end_place})
       })
-      .then(response => response.json())
+      .then(response => console.log(response.body))
       .catch((error) => {
         console.error("Error", error)
       })
@@ -53,37 +90,9 @@ export const NewJourneyPage = () => {
     // const render = (Status) => {
     //     return <h1>{Status}</h1>;
     // };
-    const StartMapAPI = () => {
-        const { ref, autocompleteRef } = usePlacesWidget({
-          apiKey:"AIzaSyCVwRHHdtd6XynKpgTNl4SQOM4jT_pTaGk",
-          options: {
-            types: []
-          },
-          
-          onPlaceSelected: (place) => {
-            console.log("1",place);
-            setStart_coordinates(place.geometry.location)
-          }
-        });
-        return <input ref={ref} name="startPoint" placeholder="Where will your journey start?" />
-      }
+
       //////////////////
-      const EndMapAPI = () => {
-        const { ref, autocompleteRef } = usePlacesWidget({
-          apiKey:"AIzaSyCVwRHHdtd6XynKpgTNl4SQOM4jT_pTaGk",
-          options: {
-            types: []
-          },
-          onPlaceSelected: (place) => {
-            console.log("1",place);
-            setEnd_coordinates(place.geometry.location)
-            console.log("2",place);
-          }
-        });
-        
-        
-        return <input ref={ ref } name="endPoint" type="text" placeholder="Where will your journey end?" />
-      }
+      
  
    
 
@@ -98,9 +107,10 @@ export const NewJourneyPage = () => {
                 <DropDownList name="discipline" items={disciplines}/>
                 <input name="title" placeholder="Give your Journey a title" />
                 <input name="description" type="text" placeholder="Give us a quick description of your Journey..." />
+                <input name="date" type="date" placeholder="Select the date for your journey" />
                 <input name="startTime" placeholder="When will your journey start?" />
-                <StartMapAPI/>
-                <EndMapAPI/>
+                <StartMapAPI setStart_coordinates={setStart_coordinates}/>
+                <EndMapAPI setEnd_coordinates={setEnd_coordinates}/>
                 <input className="button" type="submit" value="Generate Route" />
                 <input onClick={navigateToHome}className="button" type="submit" value="Go to Routes" />
             </form>
