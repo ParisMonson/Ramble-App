@@ -1,7 +1,7 @@
 import { DropDownList } from "../atomic-components/DropDownList";
 import { Page } from "../pages/Page";
 import {useNavigate} from 'react-router-dom';
-// import { Footer } from "../atomic-components/Footer";
+import { JourneyRender } from "../atomic-components/journeyRender";
 import React, {useRef, useState } from "react";
 import { usePlacesWidget } from "react-google-autocomplete";
 
@@ -35,7 +35,7 @@ const EndMapAPI = (props) => {
 }
 
 export const NewJourneyPage = (props) => {
-   
+    const [journey, setJourney] = useState()
     const [start_coordinates, setStart_coordinates] = useState();
     const [end_coordinates, setEnd_coordinates] = useState();
 
@@ -75,9 +75,10 @@ export const NewJourneyPage = (props) => {
         },
         body: JSON.stringify({host_id: user_id, title: title.value, description: description.value, date: date.value, startPoint: startPoint.value,endPoint: endPoint.value ,discipline: discipline, startTime: startTime.value, start_place: start_place, end_place: end_place})
       })
-      .then(response => console.log(response.body))
-      .catch((error) => {
-        console.error("Error", error)
+      .then((response) => (response.json()))
+      .then((data) => {
+        window.alert("Great! We've Saved your Journey!");
+        setJourney(data.journey)  
       })
     }
     
@@ -86,22 +87,11 @@ export const NewJourneyPage = (props) => {
         "Running",
         "Cycling"
     ]
-
-    // const render = (Status) => {
-    //     return <h1>{Status}</h1>;
-    // };
-
-      //////////////////
-      
- 
    
-
-   
-    
     return (
-        <div>
+        <div className="whole-page">
             <Page />
-            <div>
+            <div className="form-container">
             <form onSubmit = {saveRoute}> 
             <h2>What journey would you like to add?</h2>
                 <DropDownList name="discipline" items={disciplines}/>
@@ -115,10 +105,12 @@ export const NewJourneyPage = (props) => {
                 <input onClick={navigateToHome}className="button" type="submit" value="Go to Routes" />
             </form>
             </div>
-                
-           
+                <div className="journey-container">
+                    {journey && <JourneyRender journey={journey} />}
+                </div>
+   
         </div>
 
-// <input name="startPoint" placeholder="Where will your journey start?" />
+
     )
 }
