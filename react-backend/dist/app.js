@@ -83,15 +83,13 @@ app.post('/api/signup', verifySignUp_1.checkDuplicateEmail, authController.signU
 app.post('/api/signin', authController.signIn);
 app.post('/api/signOut', authController.signOut);
 app.post('/api/routes', routeController.saveRoute);
+app.post('/api/addParticipant', routeController.addParticipant);
 app.get('/api/all_routes', routeController.getRoutes);
 /**
  * Handles all other routes
  */
 app.get('*', (req, res) => {
     res.sendFile(path_1.default.join(__dirname, '..', '..', 'react-frontend/public/index.html'));
-});
-app.get('/', (req, res) => {
-    res.json({ message: 'Welcome to bezkoder application.' });
 });
 app.listen(port, () => {
     return console.log(`Express is listening at http://localhost:${port}`);

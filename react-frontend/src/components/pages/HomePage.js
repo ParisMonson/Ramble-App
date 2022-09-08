@@ -35,15 +35,16 @@ export const HomePage = (props) => {
   // Add information about participants into the database
   const whenSubmit = (event) => {
     event.preventDefault();
-    const userId = event.target.props.user.id
-    const journeyId = event.target.journey.id
-
+    const userId = event.target.props.user._id
+    const journeyId = event.target.journey._id
+    console.log("USER ID: ", userId)
+    console.log("JOURNEY ID: ", journeyId)
   fetch("/api/addParticipant", { // add url to post participants into database
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({userId: userId.value, journeyId: journeyId.value}), //send journey_id and partipant_id
+    body: JSON.stringify({userId: userId.value, journeyId: journeyId.value}) //send journey_id and partipant_id
     })
     .then((response) => (response.json()))
 
@@ -106,6 +107,7 @@ export const HomePage = (props) => {
                     <p>Date and Time: {journey.startTime}</p>
                     <p>Start location:{journey.startPoint} </p>
                     <p>End location: {journey.endPoint}</p>
+                    <p>Participants: {journey.participants.length}</p>
                     <button onClick={() => {sendDataToProfile()}}>Host</button>
                     {/* <button className="button" href="/journey/id">Find out more</button> */}
                 </div>
