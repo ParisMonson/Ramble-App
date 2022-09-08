@@ -44,17 +44,12 @@ export const HomePage = (props) => {
                 <h1>Hi {props.user.firstName}!</h1>
                 <h2>What would you like to do today?</h2>
                 <button onClick={navigateToNewJourney} className="button">ADD NEW JOURNEY</button>
-                <DropDownList name="discipline" items={disciplines}/>
             </div>
             
         </div>
 
       {journeys.map((journey) => {
-        const sendDataToProfile = () => {
-          navigate('/profile', {state:{id:1, name:journey.host_id}});
-        }
-        // const currentUserId = "Hello, I'm user id" //journey.host_id
-        // const currentUserId = journey.host_id
+       
         return (
         <div className="homeList">
           
@@ -63,22 +58,16 @@ export const HomePage = (props) => {
             <div className='column'>
               <div className='map-column'>
                 <img className="cyclegroup" src={journey.img} alt="map" width="250" />
+                <button className="button" href="/journey/id">Join now!</button>
               </div>
             </div>
-
-            {/* description and button card */}
-              <div className='column'>
-                <div className='map-column'>
-                <button className="button" href="/journey/id">Join now!</button>
-                <p>{journey.description}</p>
-                </div>
-              </div>
 
             {/* text card */}
                   <div className='column'>
                     <div className= 'text-column'>
                       <h3>{journey.title}</h3>
                       <p>{journey.discipline}</p>
+                      <p>{journey.description}</p>
                       <p>Date: {journey.date}</p>
                       <p>Time: {journey.startTime}</p>
                       <p>Start location:{journey.startPoint} </p>
@@ -86,8 +75,6 @@ export const HomePage = (props) => {
                       <p>Distance: {journey.distance} Miles</p>
                       <p>Duration: {journey.duration} Minutes</p>
 
-                      <button onClick={() => {sendDataToProfile()}}>Host</button>
-                      <button className="button" href="/journey/id">Find out more</button>
                     </div>
             </div>
           </div>
