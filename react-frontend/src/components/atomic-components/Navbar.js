@@ -2,7 +2,7 @@ import "./Navbar.css"
 import React from "react";
 import {useNavigate} from 'react-router-dom';
 
-export const Navbar = (props) => {
+export const Navbar = () => {
     const navigate = useNavigate();
 
     const navigateToLogin = () => {
