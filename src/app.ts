@@ -2,7 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import path from "path";
-import bluebird from "bluebird";
+// import bluebird from "bluebird";
 import cookieSession from "cookie-session";
 import cors from "cors";
 
@@ -44,7 +44,7 @@ app.use(express.static(path.join(__dirname, "..", "react-frontend", "build")));
 
 const mongoDbUrl = "mongodb://0.0.0.0/Ramble";
 
-mongoose.Promise = bluebird;
+// mongoose.Promise = bluebird;
 
 mongoose
   .connect(mongoDbUrl)
@@ -92,6 +92,6 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "..", "react-frontend/build/index.html"));
 });
 
-app.listen(port, () => {
+app.listen(process.env.PORT || port, () => {
   return console.log(`Express is listening at http://localhost:${port}`);
 });
