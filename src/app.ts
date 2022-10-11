@@ -42,12 +42,10 @@ app.use(bodyParser.json());
 
 app.use(express.static(path.join(__dirname, "..", "react-frontend", "build")));
 
-const mongoDbUrl = "mongodb://0.0.0.0/Ramble";
-
-// mongoose.Promise = bluebird;
+const mongoDbUri = process.env.MONGODB_URI;
 
 mongoose
-  .connect(mongoDbUrl)
+  .connect(mongoDbUri)
   .then(() => {
     console.log("Database connection worked ");
   })
