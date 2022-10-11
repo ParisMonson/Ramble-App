@@ -1,6 +1,9 @@
 {
   "name": "ramble-app",
   "version": "1.0.0",
+  "engines": {
+    "node": "18.9.0"
+  },
   "description": "",
   "main": "dist/app.js",
   "scripts": {
